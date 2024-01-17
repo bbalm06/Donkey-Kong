@@ -11,42 +11,39 @@ import javax.swing.Timer;
 import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
-public class Mario extends JPanel {
+public class Mario extends JPanel implements Runnable {
     public static Polygon colliding;
+    public static boolean ran = false;
 
     public static String keys_typed;
     public static String key;
     public static int dx;
     public static int dy;
-    public static int speed = 4;
-    public static int gravity = 2;
     public static int x = 12;
     public static int y = 625;
     public static boolean move = false;
+    public static boolean isTouching =true;
 
+    public static boolean isRunning = false;
     public static int Mwidth = 32;
     public static int Mheight = 30;
 
+    public static int runInterval = 0;
 
-
+    public static boolean Facing = true; //True = Right, False = Left
 
 
     public Mario() {
-
     }
+
     public static void move() {
 
-            if (wall()) {
-
-            }
-            else if(isIntersecting(background.hitBoxes)){
-                System.out.println(colliding.getBounds());
-            }
-            else {
-                x += dx;
-                y += dy;
-            }
-            //y += gravity;}
+        if (wall()) {
+            x -= dx*2;
+        } else {
+            x += dx*5;
+        }
+        //y += gravity;}
 //        if (isIntersecting(background.hitBoxes)) {
 //            System.out.println("HAP");
 //            wall();
@@ -54,32 +51,26 @@ public class Mario extends JPanel {
 //            y += -dy * speed*1.5;
 //                    //y += gravity;}
 //            }
-
     }
-    public static boolean isIntersecting(ArrayList<Polygon> hit){
-        for(Polygon x : hit){
-            if( x.intersects(background.hitB)){
-                System.out.println("TRUE");
+    public static void jump(){
+        isTouching = true;
+        y-=25;
+    }
+
+    public static boolean isIntersecting(ArrayList<Polygon> hit) {
+        for (Polygon x : hit) {
+            if (x.intersects(background.hitB)) {
+                isTouching = true;
                 colliding = x;
                 return true;
             }
         }
+        isTouching = false;
         //System.out.println("FALSE");
         return false;
     }
 
-    public static boolean checkPoint(int[] x, int point){
-        for(int y : x){
-            if(y == point){
-                System.out.println(Arrays.toString(x));
-                System.out.println("TRUE");
-                return true;
-            }
-        }
-        System.out.println("FALSE");
-        return false;
-    }
-    public static boolean wall(){
+    public static boolean wall() {
         if (x + dx < 0) {
             x += -dx;
             return true;
@@ -99,8 +90,6 @@ public class Mario extends JPanel {
         return false;
     }
 
-
-
     public void run()
     {
 
@@ -108,7 +97,7 @@ public class Mario extends JPanel {
         {
             while( true )
             {
-                sleep(10);
+                //Thread.sleep(50);
                 //repaint();
             }
         }
@@ -118,6 +107,4 @@ public class Mario extends JPanel {
         }
 
     }
-
-
 }
