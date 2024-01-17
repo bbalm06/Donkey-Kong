@@ -28,7 +28,6 @@ public class runner extends JFrame implements KeyListener {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Mario.key = "NO KEY PRESSED YET";
-
         Mario.keys_typed = "";
         background.hitBoxes.add(background.n1);
         background.hitBoxes.add(background.n2);
@@ -50,29 +49,34 @@ public class runner extends JFrame implements KeyListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
+            Mario.isRunning = true;
             Mario.dx = -1;
-            Mario.move = true;
+            Mario.Facing = false;
             Mario.move();
+            background.currentAnimation = background.marioLookLeft;
+
         }
 
-        else if (key == KeyEvent.VK_RIGHT) {
+         if (key == KeyEvent.VK_RIGHT) {
+             Mario.isRunning = true;
             Mario.dx = 1;
-            Mario.move = true;
+            Mario.Facing = true;
             Mario.move();
+            background.currentAnimation = background.marioLookRight;
+
         }
 
-        else if (key == KeyEvent.VK_UP) {
+         if (key == KeyEvent.VK_UP) {
             Mario.dy= -1;
-            Mario.move = true;
-            Mario.move();
+            Mario.jump();
         }
-
-        else if (key == KeyEvent.VK_DOWN) {
+         if (key == KeyEvent.VK_DOWN) {
             Mario.dy = 1;
             Mario.move = true;
             Mario.move();
         }
         repaint();
+        Mario.isRunning = false;
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -98,17 +102,7 @@ public class runner extends JFrame implements KeyListener {
             Mario.move = false;
         }
     }
-    public static boolean isIntersecting(ArrayList<Polygon> hit){
-        for(Polygon x : hit){
-            if( x.intersects(background.hitB)){
-                System.out.println("TRUE");
-                Mario.colliding = x;
-                return true;
-            }
-        }
-        System.out.println("FALSE");
-        return false;
-    }
+
     public void keyTyped(KeyEvent e)
     {
         Mario.keys_typed += "" + e.getKeyChar();
