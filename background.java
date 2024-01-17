@@ -4,7 +4,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.*;
+
+import static java.lang.Thread.sleep;
+
 public class background extends JPanel implements Runnable , MouseListener, MouseMotionListener {
     public static int[]x1 = {0,0,261,261};
     public static int[] y1 = {680,700,700,680};
@@ -36,18 +40,20 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
     public static ArrayList<Polygon> hitBoxes= new ArrayList<>();
     static Rectangle hitB = new Rectangle(Mario.x,Mario.y,32,32);
 
-    public static Image im1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioLookRight.png");
-
+    public static Image marioLookRight = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioLookRight.png");
+    public static Image marioLookLeft = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioLookLeft.png");
+    public static Image marioRunRight1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunRight1.png");
+    public static Image marioRunRight2 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunRight2.png");
+    public static Image marioRunLeft1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunLeft1.png");
+    public static Image marioRunLeft2 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunLeft2.png");
+    public static Image currentAnimation;
+    public boolean first = true;
+    public background(){
+        new Thread(this).start();
+    }
     public void paintComponent(Graphics window){
         Graphics2D g2 = (Graphics2D) window;
-        hitB = new Rectangle(Mario.x,Mario.y,37,37);
-        Image img1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\donkeyStage (1).png"); /*the image cannot be in the SRC folder*/
-        g2.drawImage(img1, 0 , 0 , 525 , 700 , this);
         g2.fillRect(Mario.x,Mario.y,33,33);
-        g2.drawImage(im1, Mario.x, Mario.y,32,32,this);
-        window.setColor(Color.WHITE);
-        window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );
-        window.setColor(Color.red);
         g2.fillPolygon(n1);
         g2.fillPolygon(n2);
         g2.fillPolygon(n3);
@@ -57,8 +63,47 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
         g2.fillPolygon(n7);
         g2.fillPolygon(n8);
         g2.fillPolygon(n9);
+        hitB = new Rectangle(Mario.x,Mario.y,37,37);
+        Image img1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\donkeyStage (1).png"); /*the image cannot be in the SRC folder*/
+        g2.drawImage(img1, 0 , 0 , 525 , 700 , this);
+        g2.drawImage(currentAnimation, Mario.x, Mario.y,32,32,this);
+        window.setColor(Color.WHITE);
+        //window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );
+        window.setColor(Color.red);
+        first = false;
+    }
+    public void run()
+    {
+
+        try
+        {
+            while( true )
+            {
+
+                if(Mario.isIntersecting(hitBoxes) ){
+                    Mario.y -= 1;
+                    Mario.ran = true;
+                }
+                if(! Mario.isIntersecting(hitBoxes) ){
+                    Mario.y+=1;
+
+                }
+
+
+
+                sleep(20);
+                repaint();
+            }
+        }
+        catch( Exception e )
+        {
+
+        }
 
     }
+
+
+
 
 
 
@@ -98,8 +143,4 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
 
     }
 
-    @Override
-    public void run() {
-
-    }
 }
