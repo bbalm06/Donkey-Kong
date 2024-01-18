@@ -39,13 +39,15 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
     public static Polygon n9 = new Polygon(x9,y9,4);
     public static ArrayList<Polygon> hitBoxes= new ArrayList<>();
     static Rectangle hitB = new Rectangle(Mario.x,Mario.y,32,32);
+    static Rectangle hitBo = new Rectangle(Barrel.x,Barrel.y,32,32);
 
-    public static Image marioLookRight = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioLookRight.png");
-    public static Image marioLookLeft = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioLookLeft.png");
-    public static Image marioRunRight1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunRight1.png");
-    public static Image marioRunRight2 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunRight2.png");
-    public static Image marioRunLeft1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunLeft1.png");
-    public static Image marioRunLeft2 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\marioRunLeft2.png");
+    public static Image barrelRoll = Toolkit.getDefaultToolkit().getImage("barrelRoll.png");
+    public static Image marioLookRight = Toolkit.getDefaultToolkit().getImage("marioLookRight.png");
+    public static Image marioLookLeft = Toolkit.getDefaultToolkit().getImage("marioLookLeft.png");
+    public static Image marioRunRight1 = Toolkit.getDefaultToolkit().getImage("marioRunRight1.png");
+    public static Image marioRunRight2 = Toolkit.getDefaultToolkit().getImage("marioRunRight2.png");
+    public static Image marioRunLeft1 = Toolkit.getDefaultToolkit().getImage("marioRunLeft1.png");
+    public static Image marioRunLeft2 = Toolkit.getDefaultToolkit().getImage("marioRunLeft2.png");
     public static Image currentAnimation;
     public boolean first = true;
     public background(){
@@ -64,9 +66,10 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
         g2.fillPolygon(n8);
         g2.fillPolygon(n9);
         hitB = new Rectangle(Mario.x,Mario.y,37,37);
-        Image img1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\bbalm\\IdeaProjects\\Donkey Kong\\donkeyStage (1).png"); /*the image cannot be in the SRC folder*/
+        Image img1 = Toolkit.getDefaultToolkit().getImage("C:\\Users\\s866250\\IdeaProjects\\Donkey Kong\\donkeyStage.png"); /*the image cannot be in the SRC folder*/
         g2.drawImage(img1, 0 , 0 , 525 , 700 , this);
         g2.drawImage(currentAnimation, Mario.x, Mario.y,32,32,this);
+        g2.drawImage(barrelRoll, Barrel.x , Barrel.y , 32 , 32 , this);
         window.setColor(Color.WHITE);
         //window.drawString("Mouse  coordinates " + "(" + MouseInfo.getPointerInfo().getLocation().x + "   " + MouseInfo.getPointerInfo().getLocation().y + ")", 250, 30 );
         window.setColor(Color.red);
@@ -88,7 +91,9 @@ public class background extends JPanel implements Runnable , MouseListener, Mous
                     Mario.y+=1;
 
                 }
-
+                if(!Barrel.isIntersecting(hitBoxes)){
+                    Barrel.y+=1;
+                }
 
 
                 sleep(20);
