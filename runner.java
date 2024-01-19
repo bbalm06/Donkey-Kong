@@ -29,6 +29,7 @@ public class runner extends JFrame implements KeyListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Mario.key = "NO KEY PRESSED YET";
         Mario.keys_typed = "";
+        background.ladderHitBoxes = new ArrayList<>();
         background.hitBoxes.add(background.n1);
         background.hitBoxes.add(background.n2);
         background.hitBoxes.add(background.n3);
@@ -38,6 +39,15 @@ public class runner extends JFrame implements KeyListener {
         background.hitBoxes.add(background.n7);
         background.hitBoxes.add(background.n8);
         background.hitBoxes.add(background.n9);
+        background.ladderHitBoxes.add(background.LAD1);
+        background.ladderHitBoxes.add(background.LAD2);
+        background.ladderHitBoxes.add(background.LAD3);
+        background.ladderHitBoxes.add(background.LAD4);
+        background.ladderHitBoxes.add(background.LAD5);
+        background.ladderHitBoxes.add(background.LAD6);
+        background.ladderHitBoxes.add(background.LAD7);
+        background.ladderHitBoxes.add(background.LAD8);
+        background.ladderHitBoxes.add(background.LAD9);
 
         /*all keyListeners must have this in the constructor*/
 
@@ -56,11 +66,19 @@ public class runner extends JFrame implements KeyListener {
             background.currentAnimation = background.marioLookLeft;
 
         }
+//        if(key == KeyEvent.VK_SPACE){
+//            if(Mario.isClimbing(background.ladderHitBoxes)) {
+//                while (Mario.isClimbing(background.ladderHitBoxes)) {
+//                    Mario.y += 3;
+//                    repaint();
+//                }
+//            }
+//        }
 
          if (key == KeyEvent.VK_RIGHT) {
              Mario.isRunning = true;
-            Mario.dx = 1;
-            Mario.Facing = true;
+             Mario.dx = 1;
+             Mario.Facing = true;
             Mario.move();
             background.currentAnimation = background.marioLookRight;
 
@@ -77,6 +95,7 @@ public class runner extends JFrame implements KeyListener {
         }
         repaint();
         Mario.isRunning = false;
+        Mario.climbing = false;
     }
     @Override
     public void keyReleased(KeyEvent e) {
