@@ -31,6 +31,7 @@ public class Mario extends JPanel implements Runnable {
     public static int runInterval = 0;
 
     public static boolean Facing = true; //True = Right, False = Left
+    public static boolean climbing = false;
 
 
     public Mario() {
@@ -67,6 +68,15 @@ public class Mario extends JPanel implements Runnable {
         }
         isTouching = false;
         //System.out.println("FALSE");
+        return false;
+    }
+
+    public static boolean isClimbing(ArrayList<Polygon> hit){
+        for(Polygon x : hit){
+            if(x.intersects(background.hitB)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -108,3 +118,6 @@ public class Mario extends JPanel implements Runnable {
 
     }
 }
+
+
+
