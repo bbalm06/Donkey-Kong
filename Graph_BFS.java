@@ -5,6 +5,7 @@ import java.io.*;
 public class Graph_BFS
 {
    Map<String, Set<String>> m;
+   public boolean found = false;
    //define a hashmap
    
    public void run() throws Exception
@@ -47,6 +48,7 @@ public class Graph_BFS
       in.nextLine();
       for( int r = 0; r < c; r++ )
       {
+         found = false;
          String s = in.nextLine();
          String[] st = s.split(" ");
          ArrayList<String> visited = new ArrayList<>();
@@ -58,11 +60,27 @@ public class Graph_BFS
          //make a new queue
          //add starting node to the queue and visited list
           while(!Q.isEmpty()){
+            String current = Q.remove();
+            if(current.equals(st[1])){
+               found = true;
+            }
+            else{
+               visited.add(current);
+               Q.addAll(m.get(current));
+               Q.removeAll(visited);
+            }
 
           }
+          if(found){
+             System.out.println("Does a match exist? " + st[0] + " and " + st[1] + ": MATCH");
+          }
+          else{
+             System.out.println("Does a match exist? " + st[0] + " and " + st[1] + ": NO MATCH");
+          }
+
          //while the queue is not empty
          
-            //get the first node from the queue
+            //get the first node from the queroue
             
             //get first nodes connections
             
